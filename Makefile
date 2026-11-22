@@ -8,8 +8,16 @@ WARNINGS = -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wno-sign-conversion
 CXXFLAGS ?= -O2 -g
 CXXFLAGS += -std=c++17 $(WARNINGS) -MMD -MP
 
-SFML_CFLAGS = $(shell pkg-config --cflags sfml-graphics)
-SFML_LIBS = $(shell pkg-config --libs sfml-graphics)
+# SFML instalado fora do sistema (ex.: scripts/build-sfml.sh):
+#   make SFML_PREFIX=/caminho/do/prefixo
+PKG_CONFIG = pkg-config
+ifdef SFML_PREFIX
+PKG_CONFIG = PKG_CONFIG_PATH="$(SFML_PREFIX)/lib/pkgconfig:$(SFML_PREFIX)/lib64/pkgconfig" pkg-config
+LDFLAGS += -Wl,-rpath,$(SFML_PREFIX)/lib -Wl,-rpath,$(SFML_PREFIX)/lib64
+endif
+
+SFML_CFLAGS = $(shell $(PKG_CONFIG) --cflags sfml-graphics)
+SFML_LIBS = $(shell $(PKG_CONFIG) --libs sfml-graphics)
 
 CORE_SRC = src/core/Bird.cpp src/core/World.cpp src/core/HighScoreStore.cpp
 APP_SRC = src/app/Game.cpp src/main.cpp
@@ -22,11 +30,11 @@ TEST_OBJ = $(TEST_SRC:%.cpp=$(BUILD_DIR)/%.o)
 all: $(TARGET)
 
 check-sfml:
-	@pkg-config --atleast-version=3.0 sfml-graphics || { \
+	@$(PKG_CONFIG) --atleast-version=3.0 sfml-graphics || { \
 		echo "Erro: SFML 3 (sfml-graphics >= 3.0) não encontrado pelo pkg-config."; \
-		echo "Versão encontrada: $$(pkg-config --modversion sfml-graphics 2>/dev/null || echo nenhuma)"; \
-		echo "Instale o SFML 3 (veja 'Instalar dependências' no README)"; \
-		echo "ou aponte PKG_CONFIG_PATH para uma instalação local."; \
+		echo "Versão encontrada: $$($(PKG_CONFIG) --modversion sfml-graphics 2>/dev/null || echo nenhuma)"; \
+		echo "Instale o SFML 3 (veja 'Instalação' no README) ou compile-o"; \
+		echo "com scripts/build-sfml.sh e use make SFML_PREFIX=<prefixo>."; \
 		exit 1; }
 
 $(APP_OBJ): | check-sfml

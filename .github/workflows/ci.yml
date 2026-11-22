@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Testes da lógica
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rodar testes (sem SFML)
+        run: make test
+
+  build:
+    name: Build com SFML 3
+    runs-on: ubuntu-24.04
+    env:
+      SFML_PREFIX: ${{ github.workspace }}/.deps/sfml
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar dependências de compilação do SFML
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake pkg-config libx11-dev libxrandr-dev libxcursor-dev libxi-dev \
+            libudev-dev libgl1-mesa-dev libegl1-mesa-dev libfreetype-dev
+
+      - name: Cache do SFML
+        id: sfml-cache
+        uses: actions/cache@v4
+        with:
+          path: .deps/sfml
+          key: sfml-${{ runner.os }}-ubuntu-24.04-${{ hashFiles('scripts/build-sfml.sh') }}
+
+      - name: Compilar SFML 3
+        if: steps.sfml-cache.outputs.cache-hit != 'true'
+        run: ./scripts/build-sfml.sh "$SFML_PREFIX"
+
+      - name: Compilar o jogo
+        run: make SFML_PREFIX="$SFML_PREFIX"

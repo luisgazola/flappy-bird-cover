@@ -123,3 +123,12 @@ coverage/
 *.gcda
 *.gcno
 *.gcov
+###############################################################################
+# Projeto
+###############################################################################
+
+# SFML compilado localmente por scripts/build-sfml.sh
+.deps/
+
+# Recorde salvo quando HOME/XDG_DATA_HOME não estão definidos
+highscore.txt
