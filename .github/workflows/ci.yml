@@ -34,7 +34,7 @@ jobs:
 
       - name: Cache do SFML
         id: sfml-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .deps/sfml
           key: sfml-${{ runner.os }}-ubuntu-24.04-${{ hashFiles('scripts/build-sfml.sh') }}
