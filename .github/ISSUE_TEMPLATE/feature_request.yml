@@ -1,0 +1,37 @@
+name: Sugerir uma melhoria
+description: Proponha uma funcionalidade ou ajuste para o Flappy Bird Cover.
+title: "[Melhoria] "
+labels: ["tipo: melhoria"]
+assignees: ["luisgazola"]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Problema ou necessidade
+      description: O que hoje é difícil, lento ou impossível?
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+      description: Como você imagina a solução?
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      options:
+        - Núcleo (src/core)
+        - Apresentação (src/app)
+        - Build e SFML
+        - Recursos (resources/)
+        - Documentação
+        - Outra / não sei
+    validations:
+      required: true

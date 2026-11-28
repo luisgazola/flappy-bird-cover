@@ -1,27 +1,52 @@
-<div align="center">
+<p align="right">
+  <strong>Português</strong> | <a href="README.en-US.md">English</a>
+</p>
 
-# Flappy Bird Cover
+<h1 align="center">F L A P P Y &nbsp; B I R D &nbsp; C O V E R</h1>
 
-**Jogo 2D de desviar de canos, escrito em C++17 com SFML 3**
+<p align="center">
+  <strong>Um toque para subir. A gravidade cuida do resto.</strong>
+  <br/>
+  <sub>Jogo 2D de desviar de canos em C++17 + SFML 3 — projeto de estudo com a lógica do jogo testável sem janela.</sub>
+</p>
 
-Projeto de estudo de desenvolvimento de jogos: game loop, física, colisão, animação e arquitetura de software, com a lógica do jogo testável sem janela.
+<p align="center">
+  <img alt="Em desenvolvimento" src="https://img.shields.io/badge/estado-em%20desenvolvimento-orange?style=flat-square">
+  <a href="LICENSE"><img alt="MIT no código" src="https://img.shields.io/badge/licen%C3%A7a-MIT%20(s%C3%B3%20c%C3%B3digo)-green?style=flat-square"></a>
+  <img alt="C++17" src="https://img.shields.io/badge/C%2B%2B-17-00599C?style=flat-square&logo=cplusplus&logoColor=white">
+  <img alt="SFML 3" src="https://img.shields.io/badge/SFML-3-8CC445?style=flat-square">
+  <img alt="Linux" src="https://img.shields.io/badge/plataforma-Linux-FCC624?style=flat-square&logo=linux&logoColor=black">
+</p>
 
-Luís Gazola
+<p align="center">
+  <a href="#instalação-e-configuração">Instalação</a> ·
+  <a href="#por-que-o-flappy-bird-cover">Por quê</a> ·
+  <a href="#funcionalidades-e-capacidades">Funcionalidades</a> ·
+  <a href="#guia-de-utilização">Uso</a> ·
+  <a href="#arquitetura-e-tecnologias">Arquitetura</a> ·
+  <a href="#qualidade-testes-e-validações">Testes</a> ·
+  <a href="#documentação">Docs</a>
+</p>
 
-![Estado](https://img.shields.io/badge/estado-em%20desenvolvimento-orange)
-![Licença](https://img.shields.io/badge/licen%C3%A7a-n%C3%A3o%20definida-lightgrey)
-![C++](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white)
-![SFML](https://img.shields.io/badge/SFML-3-8CC445?logo=sfml&logoColor=white)
-![Plataforma](https://img.shields.io/badge/plataforma-Linux-FCC624?logo=linux&logoColor=black)
+<p align="center">
+  <img src="docs/images/partida.png" alt="Partida em andamento" width="640" />
+</p>
 
-[Visão geral](#visão-geral) · [Funcionalidades](#funcionalidades-e-capacidades) · [Instalação](#instalação-e-configuração) · [Uso](#guia-de-utilização) · [Arquitetura](#arquitetura-e-tecnologias) · [Testes](#qualidade-testes-e-validações) · [Roadmap](#evolução-e-roadmap)
+**Game loop de passo fixo, física por segundo, colisão e pontuação num núcleo em C++ puro — `make test` roda sem SFML nem servidor gráfico.**
 
-<img src="docs/images/partida.png" alt="Partida em andamento" width="640">
+> [!IMPORTANT]
+> **Projeto de estudo, não afiliado ao Flappy Bird original.** "Flappy Bird" é marca de seus titulares. O código está sob MIT, mas os sprites e a fonte em `resources/` têm **origem e licença desconhecidas** e não estão cobertos pela licença do projeto ([NOTICE.md](NOTICE.md)). Validado apenas no Gentoo Linux com SFML 3.0.1; sons e música ainda não foram implementados.
 
-</div>
+---
 
-> [!NOTE]
-> **Projeto de estudo.** Validado apenas no Gentoo Linux com SFML 3.0.1. Não há versão publicada, arquivo de licença nem origem documentada para os sprites e a fonte em `resources/`. Sons e música ainda não foram implementados.
+## Por que o Flappy Bird Cover?
+
+| Problema | O que acontece | Como o Flappy Bird Cover resolve |
+| :--- | :--- | :--- |
+| Física presa ao FPS | O pássaro cai mais rápido em máquinas rápidas | Unidades por segundo e passo fixo de 1/120 s com acumulador |
+| Lógica misturada com a janela | Testar exige abrir o jogo | `src/core/` não inclui SFML ([ADR 0001](docs/adr/0001-separar-nucleo-e-apresentacao.md)) |
+| Aleatoriedade intestável | Canos diferentes a cada execução impedem testes | Semente injetada em `World` |
+| Constantes espalhadas | Ajustar a dificuldade exige caçar números no código | Tudo em [`GameConfig.hpp`](src/core/GameConfig.hpp) |
 
 ---
 
@@ -271,9 +296,11 @@ Tecnologias: C++17, SFML 3, GNU Make, `pkg-config`, GitHub Actions. Decisões em
 │   ├── core/         Bird, World, PipePair, Rect, HighScoreStore, GameConfig
 │   └── main.cpp
 ├── tests/core_tests.cpp
-├── CLAUDE.md
+├── AGENTS.md, CLAUDE.md
+├── LICENSE, NOTICE.md, SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md
+├── MAINTAINERS.md, REPORT.md, HANDOFF.md
 ├── Makefile
-└── README.md
+└── README.md, README.en-US.md
 ```
 
 ## Qualidade, testes e validações
@@ -298,7 +325,7 @@ A CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) roda `make test` e a
 
 ## Segurança e privacidade
 
-O jogo roda sem privilégios, não usa rede, não lê credenciais e só grava o arquivo de recorde. A instalação do SFML pelo gerenciador de pacotes exige `sudo`; o script `scripts/build-sfml.sh` não. O script baixa código do repositório oficial do SFML no GitHub; revise-o antes de executar. Não há `SECURITY.md`.
+O jogo roda sem privilégios, não usa rede, não lê credenciais e só grava o arquivo de recorde. A instalação do SFML pelo gerenciador de pacotes exige `sudo`; o script `scripts/build-sfml.sh` não. O script baixa código do repositório oficial do SFML no GitHub; revise-o antes de executar. Política de relato em [SECURITY.md](SECURITY.md).
 
 ## Evolução e roadmap
 
@@ -318,7 +345,7 @@ Previsto, sem prazos definidos:
 
 ## Contribuição
 
-Projeto pessoal de estudo; não há `CONTRIBUTING.md` nem `CODE_OF_CONDUCT.md`. Para quem trabalhar no código:
+Projeto pessoal de estudo. Guia completo em [CONTRIBUTING.md](CONTRIBUTING.md), sob o [Código de conduta](CODE_OF_CONDUCT.md). Em resumo:
 
 - Use Conventional Commits (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`).
 - Mudança de comportamento em `src/core/` exige teste em `tests/core_tests.cpp`.
@@ -326,19 +353,24 @@ Projeto pessoal de estudo; não há `CONTRIBUTING.md` nem `CODE_OF_CONDUCT.md`. 
 - Registre decisões relevantes em `docs/adr/`.
 - Mantenha `src/core/` sem dependência de SFML.
 
-## Autoria, manutenção e licença
+## Documentação
 
-- **Autor e mantenedor:** Luís Gazola ([@luisgazola](https://github.com/luisgazola)).
-- **Repositório:** [github.com/luisgazola/flappy-bird-cover](https://github.com/luisgazola/flappy-bird-cover) (público).
-- **Licença:** não definida. Não há arquivo `LICENSE`; o projeto é destinado exclusivamente para estudos.
-- **Recursos:** origem e licença dos sprites e da fonte em `resources/` não documentadas.
+- [ADR 0001 — separar núcleo e apresentação](docs/adr/0001-separar-nucleo-e-apresentacao.md) · [Capturas](docs/images/)
+- [Relatório de estado](REPORT.md) · [Passagem de trabalho](HANDOFF.md) · [Instruções para agentes](AGENTS.md)
+- [Como contribuir](CONTRIBUTING.md) · [Código de conduta](CODE_OF_CONDUCT.md) · [Política de segurança](SECURITY.md)
+
+## Colaboradores e origem
+
+Criado e mantido por Luís Fernando Gazola ([luisgazola](https://github.com/luisgazola)); responsabilidades em [MAINTAINERS.md](MAINTAINERS.md). Inspirado no jogo Flappy Bird, sem afiliação com seus titulares. Repositório público: [github.com/luisgazola/flappy-bird-cover](https://github.com/luisgazola/flappy-bird-cover).
+
+## Licença
+
+O **código-fonte** está sob a [licença MIT](LICENSE), © 2026 Luís Fernando Gazola. Os arquivos de `resources/` (sprites e fonte) **não** estão cobertos: sua origem e licença não estão documentadas. Detalhes em [NOTICE.md](NOTICE.md).
 
 ---
 
-<div align="center">
-
-**Flappy Bird Cover** · jogo 2D em C++17 e SFML 3
-
-Luís Gazola
-
-</div>
+<p align="center">
+  <em>"Mais um cano. Só mais um."</em>
+  <br/><br/>
+  <strong>Flappy Bird Cover</strong> · C++17 e SFML 3
+</p>
