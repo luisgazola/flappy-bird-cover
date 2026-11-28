@@ -1,0 +1,51 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "30 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  analisar:
+    name: Análise C++
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      security-events: write
+    env:
+      SFML_PREFIX: ${{ github.workspace }}/.deps/sfml
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Dependências de compilação do SFML
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake pkg-config libx11-dev libxrandr-dev libxcursor-dev libxi-dev \
+            libudev-dev libgl1-mesa-dev libegl1-mesa-dev libfreetype-dev
+      - name: Cache do SFML
+        id: sfml-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .deps/sfml
+          key: sfml-${{ runner.os }}-ubuntu-24.04-${{ hashFiles('scripts/build-sfml.sh') }}
+      - name: Compilar SFML 3
+        if: steps.sfml-cache.outputs.cache-hit != 'true'
+        run: ./scripts/build-sfml.sh "$SFML_PREFIX"
+      - uses: github/codeql-action/init@915412ff23e8b7659517e607487dbeae018f2934 # v4.39.5
+        with:
+          languages: c-cpp
+          build-mode: manual
+      - name: Compilar o jogo e os testes
+        run: |
+          make SFML_PREFIX="$SFML_PREFIX"
+          make test
+      - uses: github/codeql-action/analyze@915412ff23e8b7659517e607487dbeae018f2934 # v4.39.5
+        with:
+          category: "/language:c-cpp"

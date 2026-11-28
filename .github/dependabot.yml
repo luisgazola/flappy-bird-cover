@@ -1,0 +1,15 @@
+# Atualizações automáticas de dependências (Dependabot).
+# Revise cada PR: o workspace exige versões exatas e lockfiles consistentes.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    labels: ["dependências"]
+    assignees: ["luisgazola"]
+    commit-message:
+      prefix: "chore(deps)"

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Vulnerabilidade de segurança
+    url: https://github.com/luisgazola/flappy-bird-cover/blob/main/SECURITY.md
+    about: Relate em privado, conforme a política de segurança. Não abra issue pública.
+  - name: Como contribuir
+    url: https://github.com/luisgazola/flappy-bird-cover/blob/main/CONTRIBUTING.md
+    about: Ambiente, convenções e critérios antes de abrir um pull request.

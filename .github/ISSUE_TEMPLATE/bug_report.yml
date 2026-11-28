@@ -1,0 +1,72 @@
+name: Relatar um bug
+description: Algo no Flappy Bird Cover não funciona como deveria.
+title: "[Bug] "
+labels: ["tipo: bug"]
+assignees: ["luisgazola"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por relatar. **Não inclua** senhas, tokens, arquivos `.env`, dados reais de clientes ou leads.
+        Vulnerabilidades seguem a [política de segurança](https://github.com/luisgazola/flappy-bird-cover/blob/main/SECURITY.md), nunca uma issue pública.
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu
+      description: Descreva o problema em poucas linhas.
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Passos para reproduzir
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      options:
+        - Núcleo (src/core)
+        - Apresentação (src/app)
+        - Build e SFML
+        - Recursos (resources/)
+        - Documentação
+        - Outra / não sei
+    validations:
+      required: true
+  - type: input
+    id: versao
+    attributes:
+      label: Versão ou commit
+      placeholder: "ex.: v0.1.0 ou 1a2b3c4"
+    validations:
+      required: true
+  - type: textarea
+    id: ambiente
+    attributes:
+      label: Ambiente
+      description: "Distribuição Linux, compilador, versão da SFML e se usou o SFML do sistema ou scripts/build-sfml.sh."
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs ou mensagens de erro
+      description: Cole só trechos relevantes, já sem segredos.
+      render: shell
+  - type: checkboxes
+    id: confirmacoes
+    attributes:
+      label: Confirmações
+      options:
+        - label: Removi segredos e dados pessoais do relato.
+          required: true
