@@ -19,18 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
--------------------------------------------------------------------------------
-
-Scope / Escopo
-
-This license covers the source code, build files, scripts, tests and
-documentation of this repository. It does NOT cover the files in resources/
-(sprites, background and the flappybird.ttf font), whose origin and license
-are unknown, nor the name "Flappy Bird", a trademark of its respective owners.
-See NOTICE.md.
-
-Esta licença cobre o código-fonte, os arquivos de build, scripts, testes e a
-documentação deste repositório. Ela NÃO cobre os arquivos de resources/
-(sprites, fundo e a fonte flappybird.ttf), de origem e licença desconhecidas,
-nem o nome "Flappy Bird", marca de seus respectivos titulares. Veja NOTICE.md.
